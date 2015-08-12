@@ -53,19 +53,12 @@ public class HibernateTest {
 		//query.executeUpdate();
 
 		// joiny
-//		query = session.createQuery("select e.name, a.city from Employee e "
-//                + "INNER JOIN e.address a");
-//        List<Object[]> list = query.list();
-//        for(Object[] arr : list){
-//            System.out.println(Arrays.toString(arr));
-//        }
-		
 		//Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u "+" right join u.samochod s");
 		//Query query = session.createQuery("select s.nazwaSamochody,u.userName from Samochod s "+ "left join s.dane u");
 		//Query query = session.createQuery("select s.nazwaSamochody,u.userName from Samochod s "+ "full join s.dane u");
 		//Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u " + " inner join u.samochod s");
-		
-		//List<Object[]> list = query.list();
+		Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u " + " cross join u.samochod s");
+		List<Object[]> list = query.list();
 		//List<UzytkownikDane> uzyDane = (List<UzytkownikDane>) query.list();
 		//List<Double> zapisDoListyDouble = (List<Double>) query.list();
 		//List<String> zapisDoListyString = (List<String>) query.list();
@@ -77,9 +70,9 @@ public class HibernateTest {
 		session.close();
 		sessionfactory.close();
 		
-		//for(Object[] j :list){
-			//System.out.println(Arrays.toString(j) );
-		//}
+		for(Object[] j :list){
+			System.out.println(Arrays.toString(j) );
+		}
 			
 		//for(String u : zapisDoListyString)
 		//System.out.println("Uzytkownicy: " +u);
