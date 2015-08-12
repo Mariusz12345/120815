@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -15,14 +16,15 @@ import javax.persistence.Table;
 public class UzytkownikDane {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(name = "userID_seq", sequenceName = "test10.userID_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "userID_seq")
 	private Long userID;
 	
 	@Column(name ="UserName")
 	private String userName;
 	
 	@OneToOne(mappedBy = "dane")
-	@JoinColumn(name = "idSamochodu")
+	@JoinColumn
 	private Samochod samochod;
 	
 	public Samochod getSamochod() {

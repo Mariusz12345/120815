@@ -6,9 +6,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -20,8 +25,9 @@ import javax.persistence.Entity;
 })
 public class Samochod {
 	
-	@Id 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@SequenceGenerator(name = "idSamochodu_seq", sequenceName = "test10.idSamochodu_seq")
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "idSamochodu_seq")
 	private Long idSamochodu;
 	@Column(name = "nazwaSamochody")
 	private String nazwaSamochody;
@@ -30,6 +36,12 @@ public class Samochod {
 	
 	@OneToOne
 	private UzytkownikDane dane;
+
+	
+	@OneToMany
+	@JoinColumn(name = "idSamochodu")
+	private List<Serwis> serwiss = new ArrayList<Serwis>();
+	
 	
 	public Double getPrzebieg() {
 		return przebieg;

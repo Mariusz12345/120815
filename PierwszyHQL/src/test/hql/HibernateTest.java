@@ -14,11 +14,18 @@ public class HibernateTest {
 	public static void main(String[] args) {
 		
 		UzytkownikDane dane = new UzytkownikDane();
-		dane.setUserName("Piotr");
-		
 		Samochod samochod = new Samochod();
-		samochod.setNazwaSamochodu("Honda");
-		samochod.setPrzebieg(15.00);
+		Serwis serwis = new Serwis();
+		
+		serwis.setNazwaSamochodu("Skoda");
+		serwis.setPrzebieg(50000.00);
+		serwis.setDokonalPrzegladu("Artur");
+		
+		dane.setUserName("Pawe³");
+	
+		samochod.setNazwaSamochodu("Sedan");
+		samochod.setPrzebieg(10000.39);
+		
 		dane.setSamochod(samochod);
 		
 		//Przygotowanie Hibernata
@@ -30,8 +37,8 @@ public class HibernateTest {
 		int minimalnyUser = 1;
 		
 		 //select i where
-		//Query query = session.createQuery("select userName from UzytkownikDane where userID >"+minimalnyUser);
-		//Query query = session.createQuery("select nazwaSamochodu from Samochod ");
+		//Query query = session.createQuery("select s.userName  from UzytkownikDane s where userID >"+minimalnyUser);
+		//Query query = session.createQuery("select nazwaSamochody,przebieg from Samochod ");
 		//Query query = session.getNamedQuery("Uzytkownicy");
 		//Query query = session.createQuery("from UzytkownikDane ");
 		//Query query = session.getNamedQuery("Samochody");
@@ -40,40 +47,44 @@ public class HibernateTest {
 		
 		// order by
 		//Query query = session.createQuery("select userName from UzytkownikDane order by userName.userName  ");
+		//Query query = session.createQuery("select nazwaSamochody from Samochod order by nazwaSamochody.nazwaSamochody");
 		
 		// Update
 		//Query query = session.createQuery("update UzytkownikDane set userName=:newNAme where userName=:userName");
-		//query.setString("userName", "jacek");
+		//query.setString("userName", "Mateusz");
 		//query.setString("newNAme", "zmian");
-		 //squery.executeUpdate();
+		// query.executeUpdate();
 		
 		//usuwanie
 		//Query query = session.createQuery("delete UzytkownikDane where userName=:userName");
-		//query.setString("userName", "Joana");
+		//query.setString("userName", "Robert");
 		//query.executeUpdate();
 
 		// joiny
-		//Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u "+" right join u.samochod s");
+		//Query query = session.createQuery("select u.userName,s.nazwaSamochody,s.przebieg from UzytkownikDane u  right join u.samochod s");
 		//Query query = session.createQuery("select s.nazwaSamochody,u.userName from Samochod s "+ "left join s.dane u");
-		//Query query = session.createQuery("select s.nazwaSamochody,u.userName from Samochod s "+ "full join s.dane u");
+		//Query query = session.createQuery("select s.nazwaSamochody,s.przebieg,u.userName from Samochod s "+ "full join s.dane u");
 		//Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u " + " inner join u.samochod s");
-		Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u " + " cross join u.samochod s");
-		List<Object[]> list = query.list();
+		//Query query = session.createQuery("select u.userName,s.nazwaSamochody from UzytkownikDane u " + " join u.samochod s");
+		//Query query = session.createQuery("select u.userName,s.nazwaSamochody,s.przebieg from UzytkownikDane u JOIN u.samochod s");
+	    //Query query = session.createQuery("select u.nazwaSamochody ,u.przebieg, s.przebieg,s.dokonalPrzegladu from Samochod u join u.serwiss s");
+		
+		//List<Object[]> doZapisuJoinow = query.list();
 		//List<UzytkownikDane> uzyDane = (List<UzytkownikDane>) query.list();
 		//List<Double> zapisDoListyDouble = (List<Double>) query.list();
 		//List<String> zapisDoListyString = (List<String>) query.list();
 		
 		session.save(dane);
 		session.save(samochod);
+		session.save(serwis);
 		session.getTransaction().commit();
 		
 		session.close();
 		sessionfactory.close();
 		
-		for(Object[] j :list){
-			System.out.println(Arrays.toString(j) );
-		}
-			
+		//for(Object[] j :doZapisuJoinow)
+		//System.out.println(Arrays.toString(j) );
+		
 		//for(String u : zapisDoListyString)
 		//System.out.println("Uzytkownicy: " +u);
 		
