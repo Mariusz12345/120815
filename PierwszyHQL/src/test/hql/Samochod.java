@@ -29,7 +29,6 @@ public class Samochod {
 	private Double przebieg;
 	
 	@OneToOne
-	@PrimaryKeyJoinColumn
 	private UzytkownikDane dane;
 	
 	public Double getPrzebieg() {
